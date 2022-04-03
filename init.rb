@@ -1,5 +1,9 @@
-require 'documents_helper_patch'
-require 'documents_controller_patch'
+unless DocumentsHelper.method_defined?(:html_safe)
+  DocumentsHelper.send(:include, DocumentsHelperPatch)
+end
+unless DocumentsController.included_modules.include?(DocumentsControllerPatch)
+  DocumentsController.send(:include, DocumentsControllerPatch)
+end
 
 # Little hack for deface in redmine:
 # - redmine plugins are not railties nor engines, so deface overrides are not detected automatically
